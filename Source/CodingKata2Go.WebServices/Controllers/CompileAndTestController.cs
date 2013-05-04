@@ -27,16 +27,32 @@ namespace CodingKata2Go.WebServices.Controllers
         // POST api/compileandtest
         public string Post([FromBody]string value)
         {
-            var sourceCode = value;
+            Sandbox sandbox = null;
+            try
+            {
+                var sourceCode = value;
 
-            var kataAssemblyPath = Path.GetTempFileName();
+                var kataAssemblyPath = Path.GetTempFileName();
 
-            var compiler = new Compiler();
-            compiler.Compile(sourceCode, kataAssemblyPath);
+                var compiler = new Compiler();
+                compiler.Compile(sourceCode, kataAssemblyPath);
 
-            var sandbox = Sandbox.Create();
-            var result = sandbox.Execute(kataAssemblyPath, "CodingKata.Model.Tests.TestData.Kata1", "Run", null);
-            return result;
+                sandbox = Sandbox.Create();
+
+                var result = sandbox.RunNunitTest(kataAssemblyPath);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+                //TODO later format and catch nicely
+            }
+            finally
+            {
+                if (sandbox != null)
+                    AppDomain.Unload(sandbox.AppDomain);
+            }
         }
 
         // PUT api/compileandtest/5

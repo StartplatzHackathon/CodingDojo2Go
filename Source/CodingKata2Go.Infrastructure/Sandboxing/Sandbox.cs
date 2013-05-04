@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
+using NUnit.Core;
 
 namespace CodingKata2Go.Infrastructure.Sandboxing
 {
@@ -39,7 +40,14 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
             var domain = AppDomain.CreateDomain(DomainName, null, setup, permissions,
                 typeof(Sandbox).Assembly.Evidence.GetHostEvidence<StrongName>());
 
+            domain.AssemblyResolve += (sender, args) => ResolveDomain(args);
             return (Sandbox)Activator.CreateInstanceFrom(domain, typeof(Sandbox).Assembly.ManifestModule.FullyQualifiedName, typeof(Sandbox).FullName).Unwrap();
+        }
+
+        private static Assembly ResolveDomain(ResolveEventArgs args)
+        {
+            Console.WriteLine(args.Name);
+            return null;
         }
 
         public string Execute(string assemblyPath, string typeName, string method, params object[] parameters)
@@ -86,6 +94,20 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
             }
 
             return null;
+        }
+
+        public string RunNunitTest(string filename)
+        {
+            var builder = new TestSuiteBuilder();
+            var testPackage = new TestPackage(filename);
+            testPackage.BasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, BaseDirectory);
+            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, filename).Assert();
+            var suite = builder.Build(testPackage);
+            CodeAccessPermission.RevertAssert();
+
+            TestResult result = suite.Run(new NullListener(), TestFilter.Empty);
+
+            return result.Message;
         }
     }
 }

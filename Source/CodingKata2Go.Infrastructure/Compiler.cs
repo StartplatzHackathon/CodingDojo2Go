@@ -15,6 +15,9 @@ namespace CodingKata2Go.Infrastructure
             parms.IncludeDebugInformation = false;
             parms.ReferencedAssemblies.Add("System.dll");
             parms.ReferencedAssemblies.Add("System.Core.dll");
+            parms.ReferencedAssemblies.Add("nunit.framework.dll");
+            parms.ReferencedAssemblies.Add("nunit.core.dll");
+            parms.ReferencedAssemblies.Add("nunit.core.interfaces.dll");
 
             var provider = new CSharpCodeProvider();
             CompilerResults results = provider.CompileAssemblyFromSource(parms, sourceCode);

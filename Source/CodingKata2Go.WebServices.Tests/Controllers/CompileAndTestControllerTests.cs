@@ -32,6 +32,8 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
             var controller = new CompileAndTestController();
 
             var result = controller.Post(File.ReadAllText(path));
+           Assert.Fail("fail");
+
         }
     }
 }
