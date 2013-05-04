@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using CodingKata2Go.Infrastructure.Model;
 using Microsoft.CSharp;
+using NUnit.Framework;
 
 namespace CodingKata2Go.Infrastructure
 {
@@ -27,7 +28,7 @@ namespace CodingKata2Go.Infrastructure
                     };
                 parms.ReferencedAssemblies.Add("System.dll");
                 parms.ReferencedAssemblies.Add("System.Core.dll");
-                parms.ReferencedAssemblies.Add("nunit.framework.dll");
+                parms.ReferencedAssemblies.Add(typeof(TestAttribute).Assembly.Location);
 
                 var provider = new CSharpCodeProvider();
                 CompilerResults results = provider.CompileAssemblyFromFile(parms, new[]
