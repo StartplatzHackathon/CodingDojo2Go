@@ -80,6 +80,7 @@ publish
 
 # NuGet Packages Directory
 packages
+!packages/NUnit-2.6.2
 
 # Windows Azure Build Output
 csx
