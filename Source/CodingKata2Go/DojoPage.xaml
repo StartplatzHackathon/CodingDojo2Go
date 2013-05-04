@@ -132,11 +132,24 @@
                                                 Source={StaticResource Bootstrapper}}" />
                 </Grid>
 
-                <TextBox Grid.Row="2"
+
+                <ItemsControl Grid.Row="2" ItemsSource="{Binding CompileErrors}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Area}"></TextBlock>
+                                <TextBlock Text="{Binding Line}"></TextBlock>
+                                <TextBlock Text="{Binding ErrorNumber}"></TextBlock>
+                                <TextBlock Text="{Binding ErrorText}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!--<TextBox Grid.Row="2"
                          AcceptsReturn="True"
                          IsReadOnly="True"
                          Text="{Binding Errormessages,
-                                        Mode=TwoWay}" />
+                                        Mode=TwoWay}" />-->
 
             </Grid>
         </Grid>
