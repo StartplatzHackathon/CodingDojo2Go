@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using CodingKata2Go.DataModel;
 using CodingKata2Go.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Practices.ServiceLocation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Practices.ServiceLocation;
+
 namespace CodingKata2Go.ViewModel
 {
     public class WelcomeViewModel : ViewModelBase
@@ -36,8 +32,8 @@ namespace CodingKata2Go.ViewModel
 
         public void StartExercise()
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(DojoPage));
+            var rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof (DojoPage));
         }
     }
 }

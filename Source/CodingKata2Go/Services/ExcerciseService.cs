@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 
 namespace CodingKata2Go.Services
 {
@@ -14,14 +9,7 @@ namespace CodingKata2Go.Services
         public string Excercise
         {
             get { return m_excercise; }
-            set
-            {
-                if (m_excercise != value)
-                {
-                    m_excercise = value;
-                    RaisePropertyChanged(() => Excercise);
-                }
-            }
+            set { Set(() => Excercise, ref m_excercise, value); }
         }
     }
 }

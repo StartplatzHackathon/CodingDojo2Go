@@ -1,9 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodingKata2Go.DataModel
 {
@@ -15,75 +10,40 @@ namespace CodingKata2Go.DataModel
 
     public class DojoState : ObservableObject
     {
-        private bool m_isCodeEnabled;
-        private bool m_isUserEnabled;
-        private bool m_isFightEnabled;
-        private bool m_isFightBackEnabled;
         private CodeState? m_codeState;
+        private bool m_isCodeEnabled;
+        private bool m_isFightBackEnabled;
+        private bool m_isFightEnabled;
+        private bool m_isUserEnabled;
 
         public bool IsCodeEnabled
         {
             get { return m_isCodeEnabled; }
-            set
-            {
-                if (m_isCodeEnabled != value)
-                {
-                    m_isCodeEnabled = value;
-                    RaisePropertyChanged(() => IsCodeEnabled);
-                }
-            }
+            set { Set(() => IsCodeEnabled, ref m_isCodeEnabled, value); }
         }
 
         public bool IsUserEnabled
         {
             get { return m_isUserEnabled; }
-            set
-            {
-                if (m_isUserEnabled != value)
-                {
-                    m_isUserEnabled = value;
-                    RaisePropertyChanged(() => IsUserEnabled);
-                }
-            }
+            set { Set(() => IsUserEnabled, ref m_isUserEnabled, value); }
         }
 
         public bool IsFightEnabled
         {
             get { return m_isFightEnabled; }
-            set
-            {
-                if (m_isFightEnabled != value)
-                {
-                    m_isFightEnabled = value;
-                    RaisePropertyChanged(() => IsFightEnabled);
-                }
-            }
+            set { Set(() => IsFightEnabled, ref m_isFightEnabled, value); }
         }
 
         public bool IsFightBackEnabled
         {
             get { return m_isFightBackEnabled; }
-            set
-            {
-                if (m_isFightBackEnabled != value)
-                {
-                    m_isFightBackEnabled = value;
-                    RaisePropertyChanged(() => IsFightBackEnabled);
-                }
-            }
+            set { Set(() => IsFightBackEnabled, ref m_isFightBackEnabled, value); }
         }
 
         public CodeState? CodeState
         {
             get { return m_codeState; }
-            set
-            {
-                if (m_codeState != value)
-                {
-                    m_codeState = value;
-                    RaisePropertyChanged(() => CodeState);
-                }
-            }
+            set { Set(() => CodeState, ref m_codeState, value); }
         }
     }
 }

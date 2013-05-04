@@ -38,14 +38,7 @@ namespace CodingKata2Go.Services
         public DojoState CurrentState
         {
             get { return m_currentState; }
-            private set
-            {
-                if (m_currentState != value)
-                {
-                    m_currentState = value;
-                    RaisePropertyChanged(() => CurrentState);
-                }
-            }
+            private set { Set(() => CurrentState, ref m_currentState, value); }
         }
     }
 }
