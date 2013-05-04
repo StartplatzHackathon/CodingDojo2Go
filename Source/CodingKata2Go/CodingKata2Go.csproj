@@ -105,6 +105,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\DojoState.cs" />
     <Compile Include="DojoPage.xaml.cs">
       <DependentUpon>DojoPage.xaml</DependentUpon>
     </Compile>
@@ -119,6 +120,9 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Services\ExcerciseService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="UserControls\StateControl.xaml.cs">
+      <DependentUpon>StateControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\DojoViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WelcomeViewModel.cs" />
@@ -156,6 +160,10 @@
     <Page Include="DojoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\StateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WelcomePage.xaml">
       <SubType>Designer</SubType>

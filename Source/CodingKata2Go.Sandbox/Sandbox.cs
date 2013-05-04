@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
+using CodingKata2Go.WebServices.Models;
 using NUnit.Framework;
 
 namespace CodingKata2Go.Infrastructure.Sandboxing
@@ -13,7 +14,9 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
     public class Sandbox : MarshalByRefObject
     {
         private readonly string _sandboxApplicationBase;
-        private static readonly string SandboxApplicationBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, BaseDirectory);
+
+        private static readonly string SandboxApplicationBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                                                             BaseDirectory);
 
         private const string BaseDirectory = "Untrusted";
         public const string DomainName = "Sandbox";
@@ -43,15 +46,20 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
             permissions.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.RestrictedMemberAccess));
             permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
 
-            AppDomain domain = AppDomain.CreateDomain(DomainName, null, setup, permissions, typeof (Sandbox).Assembly.Evidence.GetHostEvidence<StrongName>());
+            AppDomain domain = AppDomain.CreateDomain(DomainName, null, setup, permissions,
+                                                      typeof (Sandbox).Assembly.Evidence.GetHostEvidence<StrongName>());
 
-            var sandbox = (Sandbox)Activator.CreateInstanceFrom(domain, typeof(Sandbox).Assembly.ManifestModule.FullyQualifiedName, typeof(Sandbox).FullName, false, BindingFlags.CreateInstance, null, new[] { SandboxApplicationBase }, null, null).Unwrap();
+            var sandbox =
+                (Sandbox)
+                Activator.CreateInstanceFrom(domain, typeof (Sandbox).Assembly.ManifestModule.FullyQualifiedName,
+                                             typeof (Sandbox).FullName, false, BindingFlags.CreateInstance, null,
+                                             new[] {SandboxApplicationBase}, null, null).Unwrap();
 
             string nunitPath = typeof (TestAttribute).Assembly.Location;
 
             Directory.CreateDirectory(setup.ApplicationBase);
             CopyIfNotExists(nunitPath, Path.Combine(SandboxApplicationBase, Path.GetFileName(nunitPath)));
-                
+
             return sandbox;
         }
 
@@ -65,7 +73,8 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
 
         public string Execute(string assemblyPath, string typeName, string method, params object[] parameters)
         {
-            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, assemblyPath).Assert();
+            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, assemblyPath)
+                .Assert();
             Assembly assembly = Assembly.LoadFile(assemblyPath);
             CodeAccessPermission.RevertAssert();
 
@@ -77,58 +86,14 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
             return string.Format("{0}", type.GetMethod(method).Invoke(instance, parameters));
         }
 
-        public SandboxProxy GetProxy(string assemblyPath, string typeName)
+        public List<TestError> RunNunitTest(string assemblyPath)
         {
-            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, assemblyPath).Assert();
+            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, assemblyPath)
+                .Assert();
             Assembly assembly = Assembly.LoadFile(assemblyPath);
             CodeAccessPermission.RevertAssert();
 
-            Type type = assembly.GetType(typeName);
-            if (type == null)
-                return null;
-
-            object instance = Activator.CreateInstance(type);
-            return new SandboxProxy(instance);
-        }
-
-        public SandboxProxy GetProxyForInterface(string assemblyPath, string interfaceName)
-        {
-            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, assemblyPath).Assert();
-            Assembly assembly = Assembly.LoadFile(assemblyPath);
-            CodeAccessPermission.RevertAssert();
-
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (type.GetInterface(interfaceName) != null)
-                {
-                    object instance = Activator.CreateInstance(type);
-                    return new SandboxProxy(instance);
-                }
-            }
-
-            return null;
-        }
-
-        public string RunNunitTest(string assemblyPath)
-        {
-            //var builder = new TestSuiteBuilder();
-            //var testPackage = new TestPackage(filename);
-            //var basePath = _sandboxApplicationBase;
-            //testPackage.BasePath = basePath;
-
-            //new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, filename).Assert();
-            //TestSuite suite = builder.Build(testPackage);
-            //CodeAccessPermission.RevertAssert();
-
-            //TestResult result = suite.Run(new NullListener(), TestFilter.Empty);
-
-            //return result.Message;
-
-            new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery, assemblyPath).Assert();
-            Assembly assembly = Assembly.LoadFile(assemblyPath);
-            CodeAccessPermission.RevertAssert();
-
-            var errors = new List<Exception>();
+            var errors = new List<TestError>();
 
             foreach (Type type in assembly.GetTypes().Where(_ => _.GetCustomAttribute<TestFixtureAttribute>() != null))
             {
@@ -146,26 +111,41 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
                         {
                             if (invocationException.InnerException == null)
                             {
-                                errors.Add(invocationException);
+                                errors.Add(invocationException.ToTestError(type.Name, method.Name));
                             }
                             else
                             {
-                                errors.Add(invocationException.InnerException);
+                                errors.Add(invocationException.InnerException.ToTestError(type.Name, method.Name));
                             }
                         }
                         catch (Exception testException)
                         {
-                            errors.Add(testException);
+                            errors.Add(testException.ToTestError(type.Name, method.Name));
                         }
                     }
                 }
                 catch (Exception testFixtureException)
                 {
-                    errors.Add(testFixtureException);
+                    errors.Add(testFixtureException.ToTestError(type.Name));
                 }
             }
 
-            return string.Join("\n\n", errors.Select(_ => _.ToString()));
+            return errors;
         }
+    }
+
+    public static class ExceptionExtension
+    {
+        public static TestError ToTestError(this Exception exc, string className, string methodName = null)
+        {
+            return new TestError
+                {
+                    ErrorMessage = exc.Message,
+                    StackTrace = exc.StackTrace,
+                    TestClass = className,
+                    TestMethod = methodName
+                };
+        }
+
     }
 }

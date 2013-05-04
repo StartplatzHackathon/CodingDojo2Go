@@ -9,12 +9,6 @@ namespace CodingKata2Go.Infrastructure
 {
     public class KataTestRunner
     {
-        //public TestResult RunTest(string filename, string basePath)
-        //{
-
-        //    return result;
-        //}
-
-
+        
     }
 }
