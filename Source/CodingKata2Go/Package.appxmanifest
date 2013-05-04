@@ -1,39 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-
-  <Identity Name="efa0f589-e39b-45ed-ba2f-97be8b622f9f"
-            Publisher="CN=wickelr"
-            Version="1.0.0.0" />
-
+  <Identity Name="efa0f589-e39b-45ed-ba2f-97be8b622f9f" Publisher="CN=wickelr" Version="1.0.0.0" />
   <Properties>
     <DisplayName>CodingKata2Go</DisplayName>
     <PublisherDisplayName>wickelr</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Prerequisites>
     <OSMinVersion>6.2.1</OSMinVersion>
     <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-        Executable="$targetnametoken$.exe"
-        EntryPoint="CodingKata2Go.App">
-        <VisualElements
-            DisplayName="CodingKata2Go"
-            Logo="Assets\Logo.png"
-            SmallLogo="Assets\SmallLogo.png"
-            Description="CodingKata2Go"
-            ForegroundText="light"
-            BackgroundColor="#464646">
-            <DefaultTile ShowName="allLogos" />
-            <SplashScreen Image="Assets\SplashScreen.png" />
-        </VisualElements>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CodingKata2Go.App">
+      <VisualElements DisplayName="CodingKata2Go" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="CodingKata2Go" ForegroundText="light" BackgroundColor="#948676">
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="Assets\SplashScreen.png" />
+      </VisualElements>
     </Application>
   </Applications>
   <Capabilities>

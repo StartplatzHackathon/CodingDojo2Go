@@ -79,7 +79,8 @@
                      Grid.Column="1"
                      Margin="30,10,10,0"
                      AcceptsReturn="True"
-                     IsEnabled="{Binding DojoStateMachine.CurrentState.IsTestEnabled, Source={StaticResource Bootstrapper}}"
+                     IsEnabled="{Binding DojoStateMachine.CurrentState.IsTestEnabled,
+                                         Source={StaticResource Bootstrapper}}"
                      Text="{Binding Test,
                                     Mode=TwoWay}" />
             <StackPanel Grid.Row="2"
@@ -89,13 +90,15 @@
                         Height="80"
                         Command="{Binding FightCommand}"
                         Content="FIGHT! &gt;&gt;"
-                        IsEnabled="{Binding DojoStateMachine.CurrentState.IsFightEnabled, Source={StaticResource Bootstrapper}}" />
+                        IsEnabled="{Binding DojoStateMachine.CurrentState.IsFightEnabled,
+                                            Source={StaticResource Bootstrapper}}" />
 
                 <Button Width="145"
                         Height="80"
                         Command="{Binding FightBackCommand}"
                         Content="&lt;&lt; FIGHT BACK!"
-                        IsEnabled="{Binding DojoStateMachine.CurrentState.IsFightBackEnabled, Source={StaticResource Bootstrapper}}" />
+                        IsEnabled="{Binding DojoStateMachine.CurrentState.IsFightBackEnabled,
+                                            Source={StaticResource Bootstrapper}}" />
 
             </StackPanel>
             <StackPanel Grid.Column="3"
@@ -113,17 +116,27 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="200" />
                 </Grid.RowDefinitions>
-                <TextBox AcceptsReturn="True" Text="{Binding Code, Mode=TwoWay}" IsEnabled="{Binding DojoStateMachine.CurrentState.IsCodeEnabled, Source={StaticResource Bootstrapper}}" />
+                <TextBox AcceptsReturn="True"
+                         IsEnabled="{Binding DojoStateMachine.CurrentState.IsCodeEnabled,
+                                             Source={StaticResource Bootstrapper}}"
+                         Text="{Binding Code,
+                                        Mode=TwoWay}" />
 
                 <Grid Grid.Row="1" Margin="0,0,0,0">
                     <TextBlock Style="{StaticResource TitleTextStyle}">Status:</TextBlock>
                     <TextBlock Style="{StaticResource TitleTextStyle}" Text="{Binding State}" />
                     <Button HorizontalAlignment="Right"
                             Command="{Binding VerifyCommand}"
-                            Content="Verify" IsEnabled="{Binding DojoStateMachine.CurrentState.IsCodeEnabled, Source={StaticResource Bootstrapper}}" />
+                            Content="Verify"
+                            IsEnabled="{Binding DojoStateMachine.CurrentState.IsCodeEnabled,
+                                                Source={StaticResource Bootstrapper}}" />
                 </Grid>
 
-                <TextBox AcceptsReturn="True" Text="{Binding Errormessages, Mode=TwoWay}" Grid.Row="2" IsReadOnly="True" />
+                <TextBox Grid.Row="2"
+                         AcceptsReturn="True"
+                         IsReadOnly="True"
+                         Text="{Binding Errormessages,
+                                        Mode=TwoWay}" />
 
             </Grid>
         </Grid>

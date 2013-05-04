@@ -132,6 +132,7 @@
     <Compile Include="WebServiceReferences\KataRequest.cs" />
     <Compile Include="WebServiceReferences\ServiceClient.cs" />
     <Compile Include="WebServiceReferences\TestError.cs" />
+    <Compile Include="View\StateToColorConverter.cs" />
     <Compile Include="WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>

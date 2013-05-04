@@ -26,7 +26,7 @@ namespace CodingKata2Go.DataModel
         public bool IsTestEnabled
         {
             get { return m_isTestEnabled; }
-            set { Set(() => IsUserEnabled, ref m_isUserEnabled, value); }
+            set { Set(() => IsTestEnabled, ref m_isTestEnabled, value); }
         }
 
         public bool IsFightEnabled
