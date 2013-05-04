@@ -6,32 +6,25 @@ using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
-using CodingKata2Go.WebServices.Models;
+using CodingKata2Go.Sandbox.Model;
 using NUnit.Framework;
 
-namespace CodingKata2Go.Infrastructure.Sandboxing
+namespace CodingKata2Go.Sandbox
 {
-    public class Sandbox : MarshalByRefObject
+    public class Sandboxer : MarshalByRefObject
     {
-        private readonly string _sandboxApplicationBase;
-
         private static readonly string SandboxApplicationBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                                                                              BaseDirectory);
 
         private const string BaseDirectory = "Untrusted";
-        public const string DomainName = "Sandbox";
+        public const string DomainName = "Sandboxer";
 
         public AppDomain AppDomain
         {
             get { return AppDomain.CurrentDomain; }
         }
 
-        public Sandbox(string sandboxApplicationBase)
-        {
-            _sandboxApplicationBase = sandboxApplicationBase;
-        }
-
-        public static Sandbox Create()
+        public static Sandboxer Create()
         {
             var setup = new AppDomainSetup
                 {
@@ -47,13 +40,12 @@ namespace CodingKata2Go.Infrastructure.Sandboxing
             permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
 
             AppDomain domain = AppDomain.CreateDomain(DomainName, null, setup, permissions,
-                                                      typeof (Sandbox).Assembly.Evidence.GetHostEvidence<StrongName>());
+                                                      typeof (Sandboxer).Assembly.Evidence.GetHostEvidence<StrongName>());
 
             var sandbox =
-                (Sandbox)
-                Activator.CreateInstanceFrom(domain, typeof (Sandbox).Assembly.ManifestModule.FullyQualifiedName,
-                                             typeof (Sandbox).FullName, false, BindingFlags.CreateInstance, null,
-                                             new[] {SandboxApplicationBase}, null, null).Unwrap();
+                (Sandboxer)
+                Activator.CreateInstanceFrom(domain, typeof (Sandboxer).Assembly.ManifestModule.FullyQualifiedName, typeof (Sandboxer).FullName)
+                .Unwrap();
 
             string nunitPath = typeof (TestAttribute).Assembly.Location;
 

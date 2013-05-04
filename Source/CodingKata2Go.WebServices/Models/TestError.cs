@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 
-namespace CodingKata2Go.Sandbox.Model
+namespace CodingKata2Go.WebServices.Models
 {
-    [Serializable]
     public class TestError
     {
         public string TestMethod { get; set; }

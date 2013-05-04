@@ -2,60 +2,52 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using CodingKata2Go.Infrastructure;
-using CodingKata2Go.Infrastructure.Model;
-using CodingKata2Go.Infrastructure.Sandboxing;
+using CodingKata2Go.Sandbox;
 using CodingKata2Go.WebServices.Models;
-using Elmah;
 
 namespace CodingKata2Go.WebServices.Controllers
 {
     public class CompileAndTestController : ApiController
     {
-        // GET api/compileandtest
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //// GET api/compileandtest
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
-        // GET api/compileandtest/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/compileandtest/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/compileandtest
-        public CompileAndTestResult Post([FromBody]string value)
+        public CompileAndTestResult Post([FromBody] string value)
         {
-            Sandbox sandbox = null;
+            Sandboxer sandbox = null;
             try
             {
-                var sourceCode = value;
+                string sourceCode = value;
 
-                var kataAssemblyPath = Path.GetTempFileName();
+                string kataAssemblyPath = Path.GetTempFileName();
 
                 var compiler = new Compiler();
-                var compileResult = compiler.Compile(sourceCode, kataAssemblyPath);
-                var result = new CompileAndTestResult { CompileErrors = compileResult };
-                if (compileResult != null && compileResult.Any(x => !x.IsWarning))
+                var compileResult = compiler.Compile(sourceCode, kataAssemblyPath).Select(ToContract).ToList();
+                var result = new CompileAndTestResult
+                    {
+                        CompileErrors = compileResult
+                    };
+                
+                if (compileResult.Any(x => !x.IsWarning))
                     return result;
 
-                sandbox = Sandbox.Create();
-                var testResult = sandbox.RunNunitTest(kataAssemblyPath);
-                result.TestErrors = testResult;
+                sandbox = Sandboxer.Create();
+                List<Sandbox.Model.TestError> testResult = sandbox.RunNunitTest(kataAssemblyPath);
+                result.TestErrors = testResult.Select(ToContract);
 
                 return result;
-            }
-            catch (Exception ex)
-            {
-                //log.ErrorFormat("Error appeared on system.", ex); 
-                ErrorSignal.FromCurrentContext().Raise(ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-
-                //TODO later format and catch nicely
             }
             finally
             {
@@ -64,14 +56,37 @@ namespace CodingKata2Go.WebServices.Controllers
             }
         }
 
-        // PUT api/compileandtest/5
-        public void Put(int id, [FromBody]string value)
+        //// PUT api/compileandtest/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
+
+        //// DELETE api/compileandtest/5
+        //public void Delete(int id)
+        //{
+        //}
+
+        private static TestError ToContract(Sandbox.Model.TestError sandboxTestError)
         {
+            return new TestError
+            {
+                TestClass = sandboxTestError.TestClass,
+                TestMethod = sandboxTestError.TestMethod,
+                StackTrace = sandboxTestError.StackTrace,
+                ErrorMessage = sandboxTestError.ErrorMessage,
+            };
         }
 
-        // DELETE api/compileandtest/5
-        public void Delete(int id)
+        private static CompileError ToContract(Infrastructure.Model.CompileError sandboxCompileError)
         {
+            return new CompileError
+            {
+                Column = sandboxCompileError.Column,
+                Line = sandboxCompileError.Line,
+                ErrorNumber = sandboxCompileError.ErrorNumber,
+                ErrorText = sandboxCompileError.ErrorText,
+                IsWarning = sandboxCompileError.IsWarning,
+            };
         }
     }
 }

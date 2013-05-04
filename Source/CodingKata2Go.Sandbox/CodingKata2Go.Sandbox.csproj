@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Model\TestError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sandbox.cs" />
+    <Compile Include="Sandboxer.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
