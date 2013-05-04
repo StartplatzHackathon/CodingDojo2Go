@@ -105,6 +105,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\DojoState.cs" />
     <Compile Include="DojoPage.xaml.cs">
       <DependentUpon>DojoPage.xaml</DependentUpon>
     </Compile>
