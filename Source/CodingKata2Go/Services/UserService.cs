@@ -15,13 +15,13 @@ namespace CodingKata2Go.Services
             Users = new ObservableCollection<User>
                 {
                     new User
-                        {
-                            Title = "User 1"
-                        },
+                    {
+                        Title = "User 1"
+                    },
                     new User
-                        {
-                            Title = "User 2"
-                        }
+                    {
+                        Title = "User 2"
+                    }
                 };
         }
 
@@ -59,6 +59,8 @@ namespace CodingKata2Go.Services
         public void SwitchUsers()
         {
             m_actionIndex++;
+            RaisePropertyChanged(() => TestUser);
+            RaisePropertyChanged(() => CodeUser);
         }
     }
 }

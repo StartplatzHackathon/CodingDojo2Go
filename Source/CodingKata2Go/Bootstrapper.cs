@@ -28,5 +28,10 @@ namespace CodingKata2Go
         {
             get { return ServiceLocator.Current.GetInstance<DojoStateMachine>(); }
         }
+
+        public UserService UserService
+        {
+            get { return ServiceLocator.Current.GetInstance<UserService>(); }
+        }
     }
 }

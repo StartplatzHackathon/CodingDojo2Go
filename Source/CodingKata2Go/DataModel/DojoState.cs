@@ -12,9 +12,10 @@ namespace CodingKata2Go.DataModel
     {
         private CodeState? m_codeState;
         private bool m_isCodeEnabled;
-        private bool m_isFightBackEnabled;
+
+        private bool m_isTestEnabled;
         private bool m_isFightEnabled;
-        private bool m_isUserEnabled;
+        private bool m_isFightBackEnabled;
 
         public bool IsCodeEnabled
         {
@@ -22,9 +23,9 @@ namespace CodingKata2Go.DataModel
             set { Set(() => IsCodeEnabled, ref m_isCodeEnabled, value); }
         }
 
-        public bool IsUserEnabled
+        public bool IsTestEnabled
         {
-            get { return m_isUserEnabled; }
+            get { return m_isTestEnabled; }
             set { Set(() => IsUserEnabled, ref m_isUserEnabled, value); }
         }
 
