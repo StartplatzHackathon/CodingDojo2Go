@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingKata2Go.WebServices",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingKata2Go.WebServices.Tests", "CodingKata2Go.WebServices.Tests\CodingKata2Go.WebServices.Tests.csproj", "{AFB33F82-B974-4856-ABB1-09E72CF76B67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingKata2Go.Infrastructure", "CodingKata2Go.Infrastructure\CodingKata2Go.Infrastructure.csproj", "{28DFF88E-C1C6-4047-8DBA-962575D84548}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,16 @@ Global
 		{AFB33F82-B974-4856-ABB1-09E72CF76B67}.Release|ARM.ActiveCfg = Release|Any CPU
 		{AFB33F82-B974-4856-ABB1-09E72CF76B67}.Release|x64.ActiveCfg = Release|Any CPU
 		{AFB33F82-B974-4856-ABB1-09E72CF76B67}.Release|x86.ActiveCfg = Release|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Release|ARM.ActiveCfg = Release|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Release|x64.ActiveCfg = Release|Any CPU
+		{28DFF88E-C1C6-4047-8DBA-962575D84548}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
