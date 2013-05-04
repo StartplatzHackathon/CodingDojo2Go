@@ -6,7 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CodingKata2Go.Infrastructure;
+using CodingKata2Go.Infrastructure.Model;
 using CodingKata2Go.Infrastructure.Sandboxing;
+using CodingKata2Go.WebServices.Models;
+using Elmah;
 
 namespace CodingKata2Go.WebServices.Controllers
 {
@@ -25,7 +28,7 @@ namespace CodingKata2Go.WebServices.Controllers
         }
 
         // POST api/compileandtest
-        public string Post([FromBody]string value)
+        public CompileAndTestResult Post([FromBody]string value)
         {
             Sandbox sandbox = null;
             try
@@ -35,16 +38,23 @@ namespace CodingKata2Go.WebServices.Controllers
                 var kataAssemblyPath = Path.GetTempFileName();
 
                 var compiler = new Compiler();
-                compiler.Compile(sourceCode, kataAssemblyPath);
+                var compileResult = compiler.Compile(sourceCode, kataAssemblyPath);
+                var result = new CompileAndTestResult { CompileErrors = compileResult };
+                if (compileResult != null && compileResult.Any(x => !x.IsWarning))
+                    return result;
 
                 sandbox = Sandbox.Create();
-                var result = sandbox.RunNunitTest(kataAssemblyPath);
+                var testResult = sandbox.RunNunitTest(kataAssemblyPath);
+                result.TestErrors = testResult;
 
                 return result;
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                //log.ErrorFormat("Error appeared on system.", ex); 
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+
                 //TODO later format and catch nicely
             }
             finally

@@ -1,12 +1,14 @@
 ﻿using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Text;
+using CodingKata2Go.Infrastructure.Model;
 using Microsoft.CSharp;
 
 namespace CodingKata2Go.Infrastructure
 {
     public class Compiler
     {
-        public void Compile(string sourceCode, string outputAssembly)
+        public List<CompileError> Compile(string sourceCode, string outputAssembly)
         {
             var parms = new CompilerParameters();
             parms.GenerateExecutable = false;
@@ -22,16 +24,14 @@ namespace CodingKata2Go.Infrastructure
 
             if (results.Errors.HasErrors)
             {
-                var errors = new StringBuilder();
+                var errors = new List<CompileError>();
                 foreach (CompilerError error in results.Errors)
                 {
-                    if (!error.IsWarning)
-                    {
-                        errors.AppendLine("Compile Error: Line (" + error.Line + ") - " + error.ErrorText);
-                    }
+                    errors.Add(new CompileError { Column = error.Column, ErrorNumber = error.ErrorNumber, ErrorText = error.ErrorText, IsWarning = error.IsWarning, Line = error.Line });
                 }
-                throw new CompileException(errors.ToString());
+                return errors;
             }
+            return null;
         }
     }
 }

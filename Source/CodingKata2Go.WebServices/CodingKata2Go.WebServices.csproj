@@ -41,6 +41,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc">
+      <HintPath>..\packages\Elmah.MVC.2.0.2\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -163,6 +169,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CompileAndTestController.cs" />
+    <Compile Include="Models\CompileAndTestResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -285,7 +292,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -294,6 +300,10 @@
     <ProjectReference Include="..\CodingKata2Go.Infrastructure\CodingKata2Go.Infrastructure.csproj">
       <Project>{28dff88e-c1c6-4047-8dba-962575d84548}</Project>
       <Name>CodingKata2Go.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodingKata2Go.Sandbox\CodingKata2Go.Sandbox.csproj">
+      <Project>{9797AFDB-E638-426A-BD1E-7EAEFFBEE09A}</Project>
+      <Name>CodingKata2Go.Sandbox</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
