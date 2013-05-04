@@ -38,7 +38,6 @@ namespace CodingKata2Go.WebServices.Controllers
                 compiler.Compile(sourceCode, kataAssemblyPath);
 
                 sandbox = Sandbox.Create();
-
                 var result = sandbox.RunNunitTest(kataAssemblyPath);
 
                 return result;

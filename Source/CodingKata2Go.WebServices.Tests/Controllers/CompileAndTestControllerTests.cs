@@ -27,7 +27,7 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
         [Test]
         public void TestSampleTest()
         {
-            var path = File.ReadAllText(AssemblyDirectory + "\\..\\..\\SampleTest.cs");
+            var path = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
 
             var controller = new CompileAndTestController();
 
