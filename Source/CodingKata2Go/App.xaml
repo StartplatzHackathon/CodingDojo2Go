@@ -13,6 +13,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Common/StandardStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="Accent1Brush" Color="#ffE08A12" />
+            <SolidColorBrush x:Key="Accent2Brush" Color="#ffD6BB6B" />
+            <SolidColorBrush x:Key="Accent3Brush" Color="#ffBF4A0F" />
+            <SolidColorBrush x:Key="Accent4Brush" Color="#ff4E360F" />
+            <SolidColorBrush x:Key="Accent5Brush" Color="#ff948676" />
+            
             <x:String x:Key="AppName">CodingKata2Go</x:String>
             <local:Bootstrapper x:Key="Bootstrapper" />
             <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
