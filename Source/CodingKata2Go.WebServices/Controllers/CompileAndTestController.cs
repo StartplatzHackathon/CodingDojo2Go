@@ -67,6 +67,11 @@ namespace CodingKata2Go.WebServices.Controllers
 
         private static TestError ToContract(Sandbox.Model.TestError sandboxTestError)
         {
+            if (sandboxTestError == null)
+            {
+                return null;
+            }
+
             return new TestError
             {
                 TestClass = sandboxTestError.TestClass,
@@ -78,6 +83,11 @@ namespace CodingKata2Go.WebServices.Controllers
 
         private static CompileError ToContract(Infrastructure.Model.CompileError sandboxCompileError)
         {
+            if (sandboxCompileError == null)
+            {
+                return null;
+            }
+
             return new CompileError
             {
                 Column = sandboxCompileError.Column,

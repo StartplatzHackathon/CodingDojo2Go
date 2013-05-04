@@ -25,7 +25,7 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
         [Test]
         public void TestSampleTest()
         {
-            var implPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+            var implPath = AssemblyDirectory + "\\..\\..\\SampleClass.cs";
             var testPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
 
             var request = new KataRequest
