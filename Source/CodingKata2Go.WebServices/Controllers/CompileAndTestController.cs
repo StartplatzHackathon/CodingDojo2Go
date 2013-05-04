@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 using CodingKata2Go.Infrastructure;
 using CodingKata2Go.Sandbox;
@@ -23,15 +24,15 @@ namespace CodingKata2Go.WebServices.Controllers
         //    return "value";
         //}
 
-        // POST api/compileandtest
-        public CompileAndTestResult Post([FromBody]KataRequest request)
+        // POST api/compileandtest //[FromBody]
+        public CompileAndTestResult Post(KataRequest request)
         {
             Sandboxer sandbox = null;
             string kataAssemblyPath = Path.GetTempFileName();
             try
             {
                 var compiler = new Compiler();
-                var compileResult = compiler.Compile(request.ImplementationCode, request.TestCode, kataAssemblyPath).Select(ToContract).ToList();
+                var compileResult = compiler.Compile(request.ImplementationCode ?? "", request.TestCode ?? "", kataAssemblyPath).Select(ToContract).ToList();
                 var result = new CompileAndTestResult
                     {
                         CompileErrors = compileResult

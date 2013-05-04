@@ -85,7 +85,11 @@ namespace CodingKata2Go.ViewModel
         public async void Verify()
         {
             var client = new ServiceClient();
-            CompileAndTestResult result = await client.CompileAndTestAsync(new KataRequest());
+            CompileAndTestResult result = await client.CompileAndTestAsync(new KataRequest
+                {
+                    ImplementationCode = Code,
+                    TestCode = Test,
+                });
 
             if (result.CompileErrors.Any() || result.TestErrors.Any())
             {
