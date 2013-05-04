@@ -16,11 +16,17 @@ namespace CodingKata2Go
         {
             SimpleIoc.Default.Register<UserService>();
             SimpleIoc.Default.Register<ExcerciseService>();
+            SimpleIoc.Default.Register<DojoStateMachine>();
         }
 
         public ExcerciseService ExcerciseService
         {
             get { return ServiceLocator.Current.GetInstance<ExcerciseService>(); }
+        }
+
+        public DojoStateMachine DojoStateMachine
+        {
+            get { return ServiceLocator.Current.GetInstance<DojoStateMachine>(); }
         }
     }
 }
