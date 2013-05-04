@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using System.Reflection;
+using CodingKata2Go.Infrastructure.Model;
 using CodingKata2Go.WebServices.Controllers;
-using CodingKata2Go.WebServices.Models;
 using NUnit.Framework;
 
 namespace CodingKata2Go.WebServices.Tests.Controllers
@@ -37,7 +38,7 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
         }
 
         [Test]
-        public void TestSample_GetCompileError()
+        public void TestSample_GetCompileErrorInImplementation()
         {
             var request = new KataRequest();
 
@@ -48,17 +49,20 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
 
             var result = controller.Post(request);
 
-            result.CompileErrors.ForEach(x => Console.WriteLine(x.Area));
+            var compileErrors = result.CompileErrors.ToList();
+            compileErrors.ForEach(x => Console.WriteLine(x.Area));
 
-            Assert.AreEqual(1, result.CompileErrors.Count);
+            Assert.IsNotNull(result.CompileErrors);
+            Assert.AreEqual(1, compileErrors.Count);
+            Assert.AreEqual(CodeArea.Implementation, compileErrors.First().Area);
         }
 
         private static string ReadResource(string resourceName)
         {
-            using (Stream stream = Assembly.GetExecutingAssembly()
+            using (var stream = Assembly.GetExecutingAssembly()
                                            .GetManifestResourceStream("CodingKata2Go.WebServices.Tests.CodeTestClasses." +
                                                                       resourceName))
-            using (StreamReader reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();
             }

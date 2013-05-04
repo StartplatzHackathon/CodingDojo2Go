@@ -32,7 +32,7 @@ namespace CodingKata2Go.WebServices.Controllers
                 string kataAssemblyPath = Path.GetTempFileName();
 
                 var compiler = new Compiler();
-                var compileResult = compiler.Compile(sourceCode, kataAssemblyPath).Select(ToContract).ToList();
+                var compileResult = compiler.Compile(request.ImplementationCode, request.TestCode, kataAssemblyPath).Select(ToContract).ToList();
                 var result = new CompileAndTestResult
                     {
                         CompileErrors = compileResult
