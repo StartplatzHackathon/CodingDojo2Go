@@ -65,7 +65,7 @@
             <Button Content="+" Grid.Row="2" HorizontalAlignment="Right" Command="{Binding AddUserCommand}"/>
             <TextBlock Text="ENTER YOUR CHALLENGE" Grid.Column="1" Style="{StaticResource SubheaderTextStyle}"/>
             <TextBox AcceptsReturn="True" Text="{Binding ExcerciseService.Excercise, Source={StaticResource Bootstrapper}, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
-            <Button Content="FIGHT!" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"/>
+            <Button Content="FIGHT!" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Command="{Binding StartExerciseCommand}" />
         </Grid>
         <VisualStateManager.VisualStateGroups>
 
