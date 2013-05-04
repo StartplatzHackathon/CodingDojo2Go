@@ -107,8 +107,8 @@ namespace CodingKata2Go.ViewModel
                 m_dojoStateMachine.AddAndActivate(nextState);
             }
 
-            CompileErrors = new ObservableCollection<CompileError>(result.CompileErrors);
-            TestErrors = new ObservableCollection<TestError>(result.TestErrors);
+            CompileErrors = new ObservableCollection<CompileError>(result.CompileErrors ?? new CompileError[0]);
+            TestErrors = new ObservableCollection<TestError>(result.TestErrors ?? new TestError[0]);
         }
     }
 }
