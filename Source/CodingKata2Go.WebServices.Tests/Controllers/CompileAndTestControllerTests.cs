@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CodingKata2Go.WebServices.Controllers;
@@ -12,9 +13,21 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
     [TestFixture]
     public class CompileAndTestControllerTests
     {
+        static public string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        [Test]
         public void TestSampleTest()
         {
-            var path = @"C:\Users\wickelr\Documents\GitHub\CodingDojo2Go\Source\CodingKata2Go.WebServices.Tests\SampleTest.cs";
+            var path = File.ReadAllText(AssemblyDirectory + "\\..\\..\\SampleTest.cs");
 
             var controller = new CompileAndTestController();
 
