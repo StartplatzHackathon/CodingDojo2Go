@@ -43,13 +43,14 @@ namespace CodingKata2Go.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<WelcomeViewModel>();
         }
 
-        public MainViewModel Main
+        public WelcomeViewModel Welcome
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<WelcomeViewModel>();
             }
         }
         
