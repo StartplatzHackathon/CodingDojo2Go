@@ -58,6 +58,8 @@ namespace CodingKata2Go.Services
         public void SwitchUsers()
         {
             m_actionIndex++;
+            RaisePropertyChanged(() => TestUser);
+            RaisePropertyChanged(() => CodeUser);
         }
     }
 }

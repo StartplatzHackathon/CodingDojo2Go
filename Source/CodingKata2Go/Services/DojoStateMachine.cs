@@ -23,6 +23,12 @@ namespace CodingKata2Go.Services
             m_states.Add(state);
         }
 
+        public void AddAndActivate(DojoState state)
+        {
+            m_states.Add(state);
+            GoTo(state);
+        }
+
         public IEnumerable<DojoState> States
         {
             get { return m_states; }
