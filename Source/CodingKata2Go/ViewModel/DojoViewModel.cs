@@ -96,7 +96,8 @@ namespace CodingKata2Go.ViewModel
                 var nextState = new DojoState
                     {
                         CodeState = CodeState.Fail,
-                        IsCodeEnabled = true
+                        IsCodeEnabled = true,
+                        IsFightBackEnabled = true
                     };
                 m_dojoStateMachine.AddAndActivate(nextState);
             }
