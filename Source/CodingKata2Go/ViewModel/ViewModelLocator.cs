@@ -42,8 +42,8 @@ namespace CodingKata2Go.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            //SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WelcomeViewModel>();
+            SimpleIoc.Default.Register<DojoViewModel>();
         }
 
         public WelcomeViewModel Welcome
@@ -51,6 +51,14 @@ namespace CodingKata2Go.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<WelcomeViewModel>();
+            }
+        }
+
+        public DojoViewModel Dojo
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DojoViewModel>();
             }
         }
         
