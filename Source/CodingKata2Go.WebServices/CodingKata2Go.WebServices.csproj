@@ -170,6 +170,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CompileAndTestController.cs" />
     <Compile Include="Filter\UnhandledExceptionFilter.cs" />
+    <Compile Include="Models\KataRequest.cs" />
     <Compile Include="Models\CompileAndTestResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

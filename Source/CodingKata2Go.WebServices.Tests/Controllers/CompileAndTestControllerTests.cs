@@ -24,12 +24,44 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
         [Test]
         public void TestSampleTest()
         {
-            string path = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+            var implPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+            var testPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+
+            var request = new KataRequest();
+            request.ImplementationCode = File.ReadAllText(implPath);
+            request.TestCode = File.ReadAllText(testPath);
+            var controller = new CompileAndTestController();
+
+            var result = controller.Post(request);
+            Assert.Fail("fail");
+        }
+
+        [Test]
+        public void TestSample_GetCompileError()
+        {
+            var request = new KataRequest();
+
+            request.ImplementationCode = ReadResource("CompileError.cs");
+            request.TestCode = ReadResource("SimpleTestClass.cs");
 
             var controller = new CompileAndTestController();
 
-            CompileAndTestResult result = controller.Post(File.ReadAllText(path));
-            Assert.Fail("fail");
+            var result = controller.Post(request);
+
+            result.CompileErrors.ForEach(x => Console.WriteLine(x.Area));
+
+            Assert.AreEqual(1, result.CompileErrors.Count);
+        }
+
+        private static string ReadResource(string resourceName)
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly()
+                                           .GetManifestResourceStream("CodingKata2Go.WebServices.Tests.CodeTestClasses." +
+                                                                      resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }
