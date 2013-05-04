@@ -49,7 +49,7 @@ namespace CodingKata2Go.Infrastructure
                                     Line = error.Line
                                 }).ToList();
                 }
-                return null;
+                return new List<CompileError>();
             }
             finally
             {

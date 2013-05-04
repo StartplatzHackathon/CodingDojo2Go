@@ -132,19 +132,34 @@
                                                 Source={StaticResource Bootstrapper}}" />
                 </Grid>
 
-
-                <ItemsControl Grid.Row="2" ItemsSource="{Binding CompileErrors}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Area}"></TextBlock>
-                                <TextBlock Text="{Binding Line}"></TextBlock>
-                                <TextBlock Text="{Binding ErrorNumber}"></TextBlock>
-                                <TextBlock Text="{Binding ErrorText}"></TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <StackPanel Grid.Row="2" Orientation="Vertical">
+                    <ItemsControl ItemsSource="{Binding CompileErrors}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Area}"></TextBlock>
+                                    <TextBlock Text="{Binding Line}"></TextBlock>
+                                    <TextBlock Text=" - "></TextBlock>
+                                    <TextBlock Text="{Binding ErrorNumber}"></TextBlock>
+                                    <TextBlock Text=": "></TextBlock>
+                                    <TextBlock Text="{Binding ErrorText}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding TestErrors}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TestMethod}"></TextBlock>
+                                    <TextBlock Text=": "></TextBlock>
+                                    <TextBlock Text="{Binding ErrorMessage}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                
                 <!--<TextBox Grid.Row="2"
                          AcceptsReturn="True"
                          IsReadOnly="True"

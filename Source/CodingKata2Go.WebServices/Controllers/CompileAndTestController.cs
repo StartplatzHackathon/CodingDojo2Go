@@ -49,10 +49,10 @@ namespace CodingKata2Go.WebServices.Controllers
             }
             finally
             {
-                DeleteIfExists(kataAssemblyPath);
-
                 if (sandbox != null)
                     AppDomain.Unload(sandbox.AppDomain);
+
+                DeleteIfExists(kataAssemblyPath);
             }
         }
 
@@ -101,9 +101,16 @@ namespace CodingKata2Go.WebServices.Controllers
 
         private void DeleteIfExists(string filename)
         {
-            if (File.Exists(filename))
+            try
             {
-                File.Delete(filename);
+                if (File.Exists(filename))
+                {
+                    File.Delete(filename);
+                }
+            }
+            catch (Exception)
+            {
+                // TODO
             }
         }
     }
