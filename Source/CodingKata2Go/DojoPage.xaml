@@ -1,13 +1,13 @@
 ﻿<common:LayoutAwarePage
     x:Name="pageRoot"
-    x:Class="CodingKata2Go.WelcomePage"
+    x:Class="CodingKata2Go.DojoPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CodingKata2Go"
     xmlns:common="using:CodingKata2Go.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    DataContext="{Binding Welcome, Source={StaticResource Locator}}"
+    DataContext="{Binding Dojo, Source={StaticResource Locator}}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -33,7 +33,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,30,20,0">
