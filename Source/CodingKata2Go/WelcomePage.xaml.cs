@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CodingKata2Go.WebServiceReferences;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,6 +25,8 @@ namespace CodingKata2Go
         public WelcomePage()
         {
             this.InitializeComponent();
+
+            
         }
 
         /// <summary>

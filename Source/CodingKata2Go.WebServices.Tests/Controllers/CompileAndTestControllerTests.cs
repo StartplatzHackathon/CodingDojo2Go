@@ -28,9 +28,11 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
             var implPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
             var testPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
 
-            var request = new KataRequest();
-            request.ImplementationCode = File.ReadAllText(implPath);
-            request.TestCode = File.ReadAllText(testPath);
+            var request = new KataRequest
+                {
+                    ImplementationCode = File.ReadAllText(implPath),
+                    TestCode = File.ReadAllText(testPath)
+                };
             var controller = new CompileAndTestController();
 
             var result = controller.Post(request);
@@ -40,10 +42,11 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
         [Test]
         public void TestSample_GetCompileErrorInImplementation()
         {
-            var request = new KataRequest();
-
-            request.ImplementationCode = ReadResource("CompileError.cs");
-            request.TestCode = ReadResource("SimpleTestClass.cs");
+            var request = new KataRequest
+                {
+                    ImplementationCode = ReadResource("CompileError.cs"),
+                    TestCode = ReadResource("SimpleTestClass.cs")
+                };
 
             var controller = new CompileAndTestController();
 

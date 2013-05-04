@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CodingKata2Go.DataModel;
+using CodingKata2Go.WebServiceReferences;
 using GalaSoft.MvvmLight;
 
 namespace CodingKata2Go.Services

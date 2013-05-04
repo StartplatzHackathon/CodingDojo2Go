@@ -27,10 +27,9 @@ namespace CodingKata2Go.WebServices.Controllers
         public CompileAndTestResult Post([FromBody]KataRequest request)
         {
             Sandboxer sandbox = null;
+            string kataAssemblyPath = Path.GetTempFileName();
             try
             {
-                string kataAssemblyPath = Path.GetTempFileName();
-
                 var compiler = new Compiler();
                 var compileResult = compiler.Compile(request.ImplementationCode, request.TestCode, kataAssemblyPath).Select(ToContract).ToList();
                 var result = new CompileAndTestResult
@@ -49,6 +48,8 @@ namespace CodingKata2Go.WebServices.Controllers
             }
             finally
             {
+                DeleteIfExists(kataAssemblyPath);
+
                 if (sandbox != null)
                     AppDomain.Unload(sandbox.AppDomain);
             }
@@ -85,6 +86,14 @@ namespace CodingKata2Go.WebServices.Controllers
                 ErrorText = sandboxCompileError.ErrorText,
                 IsWarning = sandboxCompileError.IsWarning,
             };
+        }
+
+        private void DeleteIfExists(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
         }
     }
 }
