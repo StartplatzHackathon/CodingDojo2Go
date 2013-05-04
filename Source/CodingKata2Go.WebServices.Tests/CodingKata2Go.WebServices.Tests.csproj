@@ -117,8 +117,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CodeTestClasses\CompileError.cs" />
+    <EmbeddedResource Include="CodeTestClasses\SimpleTestClass.cs" />
     <Compile Include="Controllers\CompileAndTestControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleClass.cs" />
     <Compile Include="SampleTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +131,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodingKata2Go.Infrastructure\CodingKata2Go.Infrastructure.csproj">
+      <Project>{28DFF88E-C1C6-4047-8DBA-962575D84548}</Project>
+      <Name>CodingKata2Go.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodingKata2Go.WebServices\CodingKata2Go.WebServices.csproj">
       <Project>{A28360DF-4562-4190-A6E5-AC02941FD243}</Project>
       <Name>CodingKata2Go.WebServices</Name>

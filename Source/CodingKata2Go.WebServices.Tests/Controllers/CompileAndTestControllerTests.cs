@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using System.Reflection;
+using CodingKata2Go.Infrastructure.Model;
 using CodingKata2Go.WebServices.Controllers;
-using CodingKata2Go.WebServices.Models;
 using NUnit.Framework;
 
 namespace CodingKata2Go.WebServices.Tests.Controllers
@@ -24,12 +25,47 @@ namespace CodingKata2Go.WebServices.Tests.Controllers
         [Test]
         public void TestSampleTest()
         {
-            string path = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+            var implPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+            var testPath = AssemblyDirectory + "\\..\\..\\SampleTest.cs";
+
+            var request = new KataRequest();
+            request.ImplementationCode = File.ReadAllText(implPath);
+            request.TestCode = File.ReadAllText(testPath);
+            var controller = new CompileAndTestController();
+
+            var result = controller.Post(request);
+            Assert.Fail("fail");
+        }
+
+        [Test]
+        public void TestSample_GetCompileErrorInImplementation()
+        {
+            var request = new KataRequest();
+
+            request.ImplementationCode = ReadResource("CompileError.cs");
+            request.TestCode = ReadResource("SimpleTestClass.cs");
 
             var controller = new CompileAndTestController();
 
-            CompileAndTestResult result = controller.Post(File.ReadAllText(path));
-            Assert.Fail("fail");
+            var result = controller.Post(request);
+
+            var compileErrors = result.CompileErrors.ToList();
+            compileErrors.ForEach(x => Console.WriteLine(x.Area));
+
+            Assert.IsNotNull(result.CompileErrors);
+            Assert.AreEqual(1, compileErrors.Count);
+            Assert.AreEqual(CodeArea.Implementation, compileErrors.First().Area);
+        }
+
+        private static string ReadResource(string resourceName)
+        {
+            using (var stream = Assembly.GetExecutingAssembly()
+                                           .GetManifestResourceStream("CodingKata2Go.WebServices.Tests.CodeTestClasses." +
+                                                                      resourceName))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }

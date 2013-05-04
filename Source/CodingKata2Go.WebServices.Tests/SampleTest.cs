@@ -5,14 +5,6 @@ using NUnit.Framework;
 
 namespace CodingKata2Go.WebServices.Tests
 {
-    public class SampleClass
-    {
-        public int Add(int i, int j)
-        {
-            return i + j;
-        }
-    }
-
     [TestFixture]
     public class SampleTest
     {

@@ -24,17 +24,15 @@ namespace CodingKata2Go.WebServices.Controllers
         //}
 
         // POST api/compileandtest
-        public CompileAndTestResult Post([FromBody] string value)
+        public CompileAndTestResult Post([FromBody]KataRequest request)
         {
             Sandboxer sandbox = null;
             try
             {
-                string sourceCode = value;
-
                 string kataAssemblyPath = Path.GetTempFileName();
 
                 var compiler = new Compiler();
-                var compileResult = compiler.Compile(sourceCode, kataAssemblyPath).Select(ToContract).ToList();
+                var compileResult = compiler.Compile(request.ImplementationCode, request.TestCode, kataAssemblyPath).Select(ToContract).ToList();
                 var result = new CompileAndTestResult
                     {
                         CompileErrors = compileResult
