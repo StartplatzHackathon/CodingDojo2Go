@@ -5,47 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CodingKata2Go.DataModel;
+using CodingKata2Go.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Practices.ServiceLocation;
 
 namespace CodingKata2Go.ViewModel
 {
     public class WelcomeViewModel : ViewModelBase
     {
-        private int m_userIndex = 3;
-
-        private string m_excercise;
+        private readonly UserService m_userService;
 
         public WelcomeViewModel()
         {
-            Users = new ObservableCollection<User>();
-            Users.Add(new User { Title = "User 1" });
-            Users.Add(new User { Title = "User 2" });
-
-            AddUserCommand = new RelayCommand(AddUser);
+            m_userService = ServiceLocator.Current.GetInstance<UserService>();
+            AddUserCommand = new RelayCommand(m_userService.AddUser);
         }
 
-        public ObservableCollection<User> Users { get; private set; }
-
-        public string Excercise
+        public ObservableCollection<User> Users
         {
-            get { return m_excercise; }
-            set
-            {
-                if (m_excercise != value)
-                {
-                    m_excercise = value;
-                    RaisePropertyChanged(() => Excercise);
-                }
-            }
+            get { return m_userService.Users; }
         }
 
         public RelayCommand AddUserCommand { get; private set; }
-
-        public void AddUser()
-        {
-            Users.Add(new User{ Title = "User " + m_userIndex});
-            m_userIndex++;
-        }
     }
 }
