@@ -15,40 +15,11 @@ namespace CodingKata2Go.DataModel
 
     public class DojoState : ObservableObject
     {
-        private string m_testName;
-        private string m_codeName;
         private bool m_isCodeEnabled;
         private bool m_isUserEnabled;
         private bool m_isFightEnabled;
         private bool m_isFightBackEnabled;
         private CodeState? m_codeState;
-
-        public string TestName
-        {
-            get { return m_testName; }
-            set
-            {
-                if (m_testName != value)
-                {
-                    m_testName = value;
-                    RaisePropertyChanged(() => TestName);
-                }
-            }
-        }
-
-        public string CodeName
-        {
-            get { return m_codeName; }
-            set
-            {
-                if (m_codeName != value)
-                {
-                    m_codeName = value;
-                    RaisePropertyChanged(() => CodeName);
-                }
-            }
-        }
-
 
         public bool IsCodeEnabled
         {
@@ -114,6 +85,5 @@ namespace CodingKata2Go.DataModel
                 }
             }
         }
-
     }
 }
